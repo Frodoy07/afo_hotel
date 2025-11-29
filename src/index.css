@@ -1,13 +1,62 @@
+/* 1. Import Tailwind Core */
 @import "tailwindcss";
+
+/* 2. Import External Resources */
 @import "../animations.css";
 
+/* 3. Configure Theme using @theme directive (Replaces tailwind.config.js) */
+@theme {
+  /* Font Family - Playfair Display with fallback to default serif stack */
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria,
+    "Times New Roman", Times, serif;
+
+  /* Border Radius */
+  --radius: 0.5rem;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Extend Colors 
+     Note: In v4, we map the CSS variables directly. 
+     The variables themselves are defined in the :root block below.
+  */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+}
+
+/* 4. Define CSS Variables (The source of truth for your colors) */
 @layer base {
+  /* Apply the serif font globally */
   body {
-    @apply font-serif;
+    font-family: var(--font-serif);
   }
 
   :root {
-    /* Added 'hsl(' wrapper to all color definitions to make them valid CSS colors */
+    /* Defined with 'hsl()' wrapper so they are valid CSS colors immediately.
+      Tailwind v4 reads these directly via the --color-* mappings above.
+    */
     --primary: hsl(43 55% 53%);
     --primary-foreground: hsl(0 0% 0%);
 
