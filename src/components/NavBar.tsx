@@ -11,7 +11,7 @@ const NavBar = () => {
   return (
     <nav className="bg-background text-foreground shadow-lg">
       {/* 1. Logo and Toggle Section */}
-      <div className="flex flex-col bg-black justify-between items-center w-full p-1 md:p-0">
+      <div className="flex flex-col bg-black justify-between items-center w-full p-1 pb-4 md:p-0 md:pb-2">
         {/* Logo Container */}
         <div className="md:justify-center py-3">
           <img
@@ -47,7 +47,7 @@ const NavBar = () => {
         `}
       >
         <div>
-          <ul className="flex flex-col md:flex-row text-center justify-center space-y-2 md:space-y-0 md:space-x-8 p-1 mx-5 my-1">
+          <ul className="flex flex-col md:flex-row text-center justify-center space-y-2 md:space-y-0 md:space-x-8 p-1 mx-5 mb-3">
             {navLinks.map((link) => (
               <NavLink key={link.name} to={link.href} className={linkClass}>
                 {/* Use Render Prop to access isActive for the underline logic */}

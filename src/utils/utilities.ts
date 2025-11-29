@@ -1,8 +1,8 @@
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Rooms", href: "/Rooms" },
-  { name: "Contact", href: "/Contact" },
   { name: "Facilities", href: "/Facilities" },
+  { name: "Contact", href: "/Contact" },
 ];
 
 const linkClass = ({ isActive }: { isActive: boolean }): string => {

@@ -1,14 +1,47 @@
-import { navLinks, linkClass } from "../utils/utilities";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router";
+import { navLinks, linkClass } from "../utils/utilities";
 
 const Footer = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When footer enters the viewport (10% visible)
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Run animation only once
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className="bg-(--background) border-(--primary/20) overflow-hidden border-t">
+    // Applied 'animate-fade-in' conditionally based on scroll position
+    <footer
+      ref={footerRef}
+      className={`bg-(--background) border-(--primary/20) overflow-hidden border-t ${
+        isVisible ? "animate-fade-in" : "opacity-0"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4 pt-12 pb-6 sm:px-6 lg:px-8 lg:pt-16 ">
         {/* Top Section: Flex container for Logo, Links, Socials */}
         <div className="mx-4 md:mx-20 flex flex-col md:flex-row mb-8 gap-8 justify-between items-center md:items-start">
-          {/* 1. Logo & Address Section */}
-          <div className="flex flex-col gap-9 items-center md:items-start text-center md:text-left">
+          {/* 1. Logo & Address Section - Slides up first */}
+          <div
+            className={`flex flex-col gap-9 items-center md:items-start text-center md:text-left ${
+              isVisible ? "animate-slide-in-up" : "opacity-0"
+            }`}
+          >
             <div>
               <img
                 src="logo.png"
@@ -41,8 +74,12 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 2. Navigation Links Section */}
-          <div className="text-center md:text-left w-full md:w-auto">
+          {/* 2. Navigation Links Section - Slides up with 200ms delay */}
+          <div
+            className={`text-center md:text-left w-full md:w-auto ${
+              isVisible ? "animate-slide-in-up delay-200" : "opacity-0"
+            }`}
+          >
             <ul className="space-y-4 text-sm flex flex-col items-center md:items-start">
               {navLinks.map((link) => (
                 <NavLink key={link.name} to={link.href} className={linkClass}>
@@ -63,8 +100,12 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Contact & Social Media Section */}
-          <div className="text-center md:text-left w-full md:w-auto">
+          {/* 3. Contact & Social Media Section - Slides up with 400ms delay */}
+          <div
+            className={`text-center md:text-left w-full md:w-auto ${
+              isVisible ? "animate-slide-in-up delay-400" : "opacity-0"
+            }`}
+          >
             <p className="text-md font-serif font-medium text-(--foreground) mb-4">
               Contact Us:
             </p>
@@ -177,8 +218,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section: Copyright */}
-        <div className="container mx-auto px-4 text-center border-t border-(--border) pt-3 mt-8">
+        {/* Bottom Section: Copyright - Fades in slowly at the end */}
+        <div
+          className={`container mx-auto px-4 text-center border-t border-(--border) pt-3 mt-8 ${
+            isVisible ? "animate-fade-in delay-700" : "opacity-0"
+          }`}
+        >
           <h3 className="text-2xl font-serif text-(--primary) tracking-widest">
             AFO HOTEL & SUITE
           </h3>
