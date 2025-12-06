@@ -17,12 +17,14 @@ const HomePage = () => {
       <Herro
         children={
           <>
-            <h1 className="text-3xl mb-4 md:text-5xl font-serif font-light text-(--primary-foreground) tracking-wide transition-opacity duration-700 animate-slide-in-down">
+            <h1 className="text-4xl mb-6 md:text-6xl font-serif font-bold text-white tracking-widest transition-opacity duration-700 animate-slide-in-down">
               WELCOME TO AFO HOTEL & SUITE
             </h1>
 
-            <p className="text-lg md:text-md text-(--primary-foreground)/80 font-light tracking-wider transition-opacity duration-700 animate-slide-in-up delay-200">
-              Good People. Good Thinking. Good Feeling.
+            <p className="text-md text-white font-light transition-opacity duration-700 animate-slide-in-up delay-200">
+              Experience comfort at AFO Hotel & Suite. The top-rated
+              accommodation in Ijegun, Alimosho offering affordable luxury and
+              24/7 power.
             </p>
           </>
         }

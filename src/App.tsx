@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="/Rooms" element={<Rooms />} />
-          <Route path="/Contact" element={<Contact />} />
-          <Route path="/Gallery" element={<Gallery />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/gallery" element={<Gallery />} />
         </Route>
       </Routes>
     </BrowserRouter>
