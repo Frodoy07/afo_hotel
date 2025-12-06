@@ -46,11 +46,28 @@ const Contact = () => {
               ${isContactVisible ? "animate-fade-in" : "opacity-0"}
             `}
           >
-            <img
-              className="object-cover w-full h-full"
-              src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=100"
-              alt="AFO Hotel Location Map"
-            />
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=AFO+HOTEL+AND+SUITE+Lagos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block w-full h-full overflow-hidden rounded-lg border border-[hsl(0,0%,27%)] bg-[hsl(0,0%,10%)] hover:border-[hsl(43,55%,53%)] transition-colors duration-300"
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.9983864193446!2d3.253250773563342!3d6.511618193480762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8592c49961b1%3A0xe3c48d74758bbe23!2sAFO%20HOTEL%20AND%20SUITE!5e1!3m2!1sen!2sng!4v1765008329829!5m2!1sen!2sng"
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-300 grayscale-[0.8] invert-[0.9] contrast-[1.1] pointer-events-none"
+                loading="lazy"
+              ></iframe>
+
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="px-4 py-2 bg-[hsl(43,55%,53%)] text-black font-semibold rounded-md shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  Get Directions
+                </span>
+              </div>
+
+              <div className="absolute bottom-2 left-2 bg-[hsl(0,0%,10%)]/90 border border-[hsl(0,0%,27%)] px-2 py-1 rounded text-xs text-[hsl(0,0%,96%)]">
+                📍 View on Map
+              </div>
+            </a>
           </div>
 
           {/* Contact Grid - Animated Slide Up */}
