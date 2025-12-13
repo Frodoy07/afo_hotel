@@ -48,7 +48,7 @@ const HomePage = () => {
                 <span className="text-(--primary)">IN THE HEART OF LAGOS</span>
               </h2>
 
-              <div className="space-y-4 text-(--muted-foreground) text-sm sm:text-base leading-relaxed font-light">
+              <div className="space-y-4 text-zinc-500/90 text-sm sm:text-base leading-relaxed font-light">
                 <p>
                   Welcome to{" "}
                   <strong className="text-zinc-900">AFO Hotel & Suite</strong>,

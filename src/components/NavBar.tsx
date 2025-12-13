@@ -1,85 +1,118 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { NavLink } from "react-router";
-import { navLinks, linkClass } from "../utils/utilities";
+import { navLinks } from "../utils/utilities";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
-  // --- AUTO CLOSE HANDLER ---
-  // Only closes the menu. Does not force scroll to top.
+  
   const handleLinkClick = () => {
     setIsOpen(false);
   };
 
   return (
-    // REMOVED 'sticky top-0' here.
-    // Now the navbar will scroll up and disappear as the user scrolls down.
-    <nav className="bg-background text-foreground shadow-lg z-50 relative">
-      {/* 1. Logo and Toggle Section */}
-      <div className="flex flex-col bg-black justify-between items-center w-full p-1 pb-4 md:p-0 md:pb-2">
-        {/* Logo Container */}
-        <div className="md:justify-center py-3">
-          <img
-            src="logo.png"
-            alt="AFO Hotel & Suite logo"
-            className="h-20 sm:h-24"
-          />
-        </div>
+    <nav className="sticky top-0 bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-md border-b border-border/40 shadow-sm z-50">
+      {/* Main container */}
+      <div className="container mx-auto px-4">
+        {/* Top bar with logo and toggle */}
+        <div className="flex items-center justify-between py-3">
+          {/* Logo */}
+          <div className="flex items-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full blur-xl"></div>
+              <img
+                src="logo.png"
+                alt="AFO Hotel & Suite logo"
+                className="relative h-16 w-auto drop-shadow-md transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
 
-        {/* Mobile Menu Toggle Button */}
-        <button
-          onClick={toggleMenu}
-          className="md:hidden p-3 absolute right-4 top-8 text-primary rounded-md focus:outline-none focus:ring-2 focus:ring-ring transition-colors duration-300"
-          aria-label={isOpen ? "Close Menu" : "Open Menu"}
-          aria-expanded={isOpen}
-        >
-          {isOpen ? (
-            <X size={24} className="text-primary text-white" />
-          ) : (
-            <Menu size={24} className="text-primary text-white" />
-          )}
-        </button>
-      </div>
-
-      {/* 2. Navigation Lists (Desktop and Mobile) */}
-      <div
-        className={`
-          transition-all duration-300 ease-in-out overflow-hidden
-          ${isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} 
-          w-full bg-black md:block
-          md:border-t md:border-border
-          md:max-h-full md:opacity-100
-        `}
-      >
-        <div>
-          <ul className="flex flex-col md:flex-row text-center justify-center space-y-2 md:space-y-0 md:space-x-8 p-1 mx-5 mb-3">
+          {/* Desktop Navigation - Hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.href}
-                className={linkClass}
-                // Attaching the auto-close handler
-                onClick={handleLinkClick}
+                className={({ isActive }) =>
+                  `relative px-6 py-3 text-sm font-medium transition-all duration-300 rounded-lg
+                  ${isActive 
+                    ? 'text-primary bg-primary/10' 
+                    : 'text-white hover:text-primary hover:bg-primary/5'
+                  }`
+                }
               >
-                {({ isActive }) => (
-                  <>
-                    {link.name}
-                    <div
-                      className={`
-                        underline absolute bottom-0 left-0 h-0.5 bg-(--primary) transition-all duration-300 ease-in-out
-                        ${isActive ? "w-full" : "w-0 group-hover:w-full"}
-                      `}
-                    ></div>
-                  </>
-                )}
+                {link.name}
+                <span className="absolute inset-x-3 -bottom-px h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </NavLink>
             ))}
-          </ul>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden relative p-2.5 rounded-xl bg-gradient-to-br from-background to-border/20 border border-border/30 shadow-sm hover:shadow-md transition-all duration-300 group"
+            aria-label={isOpen ? "Close Menu" : "Open Menu"}
+            aria-expanded={isOpen}
+          >
+            <div className="relative">
+              <div className={`absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}></div>
+              {isOpen ? (
+                <X size={20} className="relative text-primary transition-transform duration-300 rotate-90" />
+              ) : (
+                <Menu size={20} className="relative text-foreground/70 group-hover:text-primary transition-colors duration-300" />
+              )}
+            </div>
+          </button>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <div
+          className={`
+            md:hidden overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+            ${isOpen 
+              ? "max-h-screen opacity-100 mt-2 mb-4" 
+              : "max-h-0 opacity-0"
+            }
+          `}
+        >
+          <div className="bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-lg border border-border/30 rounded-2xl shadow-xl py-2">
+            <ul className="space-y-1">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <NavLink
+                    to={link.href}
+                    onClick={handleLinkClick}
+                  >
+                    {({ isActive }) => (
+                      <div
+                        className={`block mx-2 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300
+                        ${isActive
+                          ? 'text-primary bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20'
+                          : 'text-white hover:text-primary hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="relative">
+                            {link.name}
+                            <span className={`absolute left-0 -bottom-1 h-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-full transition-all duration-300 ${isActive ? 'w-full' : 'w-0'}`}></span>
+                          </span>
+                          <ChevronDown size={16} className="text-foreground/40 -rotate-90" />
+                        </div>
+                      </div>
+                    )}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
+
+      {/* Subtle bottom glow effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
     </nav>
   );
 };

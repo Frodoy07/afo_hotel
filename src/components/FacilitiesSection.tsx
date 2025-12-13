@@ -3,7 +3,6 @@ import { useScrollAnimation } from "../utils/utilities";
 const FacilitiesSection = () => {
   const { elementRef: sectionRef, isVisible } = useScrollAnimation();
 
-  // Facility Data with Inline SVGs
   const facilities = [
     {
       label: "24/7 Power Supply",
@@ -23,7 +22,6 @@ const FacilitiesSection = () => {
         </svg>
       ),
     },
-
     {
       label: "Fine Dining Restaurant",
       icon: (
@@ -147,19 +145,38 @@ const FacilitiesSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-zinc-50 px-5 md:px-10 py-16 sm:py-24 border-y border-(--primary/20)"
+      className="relative w-full bg-gradient-to-b from-background to-background/60 py-20 md:py-28 overflow-hidden"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 bg-grid-zinc-100/50 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
+      <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading Section */}
         <div
-          className={` text-start md:text-center mb-16 transition-opacity duration-1000 ${
-            isVisible ? "animate-slide-in-down" : "opacity-0"
+          className={`max-w-4xl mx-auto mb-16 md:mb-24 transition-all duration-1000 ${
+            isVisible
+              ? "animate-slide-in-down opacity-100"
+              : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl font-serif font-light text-(--primary) mb-4 tracking-wide">
-            World-Class Amenities
+          <div className="inline-flex items-center gap-3 mb-6">
+            <div className="w-12 h-px bg-gradient-to-r from-primary to-primary/30"></div>
+            <span className="text-sm font-medium tracking-widest uppercase text-primary">
+              Premium Facilities
+            </span>
+            <div className="w-12 h-px bg-gradient-to-l from-primary to-primary/30"></div>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-foreground mb-6 tracking-tight">
+            World-Class
+            <span className="block text-primary mt-2">
+              Amenities & Services
+            </span>
           </h2>
-          <p className="text-(--muted-foreground) max-w-2xl mx-auto text-sm sm:text-base font-light leading-relaxed">
+
+          <p className="text-white max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">
             Indulge in a curated selection of world-class facilities designed to
             elevate every moment of your stay. From the assurance of 24/7
             uninterrupted power and maximum security to the leisure of our
@@ -169,47 +186,88 @@ const FacilitiesSection = () => {
         </div>
 
         {/* Icons Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-8 md:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {facilities.map((facility, index) => (
             <div
               key={index}
               className={`
-                group flex items-center gap-5 p-4 rounded-sm transition-all duration-500 hover:bg-white hover:shadow-lg border border-transparent hover:border-(--primary/10)
+                relative group flex flex-col items-center text-center gap-6 p-8 
+                rounded-2xl transition-all duration-500 ease-out
+                bg-black/85 backdrop-blur-sm border border-zinc-200/50
+                hover:bg-white hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5
+                hover:-translate-y-2
                 ${
                   isVisible
-                    ? `animate-slide-in-up delay-${(index % 3) * 200}`
-                    : "opacity-0"
+                    ? `opacity-100 translate-y-0 delay-${index * 100}`
+                    : "opacity-0 translate-y-10"
                 }
               `}
             >
-              {/* Icon Container: White background for contrast against light gray section */}
-              <div
-                className="
-                shrink-0
-                w-14 h-14 
-                flex items-center justify-center 
-                bg-black 
-                text-(--primary) 
-                border border-(--primary/20) 
-                rounded-sm 
-                shadow-sm 
-                group-hover:scale-105 transition-transform duration-300
-              "
-              >
-                {facility.icon}
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* Icon Container */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl blur-lg group-hover:blur-xl transition-all duration-500" />
+                <div
+                  className="
+                    relative z-10 w-16 h-16 
+                    flex items-center justify-center 
+                    bg-gradient-to-br from-background to-white
+                    text-primary
+                    border border-zinc-200
+                    rounded-xl
+                    shadow-lg shadow-primary/5
+                    group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-primary/10
+                    group-hover:border-primary/30
+                    transition-all duration-500
+                  "
+                >
+                  <div className="group-hover:scale-110 transition-transform duration-500">
+                    {facility.icon}
+                  </div>
+                </div>
+
+                {/* Pulsing dot */}
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white shadow-lg animate-pulse">
+                  <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                </div>
               </div>
 
-              {/* Label Container */}
-              <div className="flex flex-col">
-                <span className="text-zinc-900 font-light text-lg tracking-wide">
+              {/* Content */}
+              <div className="space-y-2">
+                <h3 className="text-xl font-semibold text-foreground tracking-tight group-hover:text-black transition-colors duration-300">
                   {facility.label}
-                </span>
-                <span className="text-zinc-500 text-xs uppercase tracking-widest mt-1">
-                  Available
-                </span>
+                </h3>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-px bg-primary/50"></div>
+                  <span className="text-sm font-medium uppercase tracking-widest text-primary">
+                    24/7 Available
+                  </span>
+                  <div className="w-4 h-px bg-primary/50"></div>
+                </div>
               </div>
+
+              {/* Hover indicator */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           ))}
+        </div>
+
+        {/* Bottom decorative element */}
+        <div
+          className={`mt-20 transition-all duration-1000 delay-1000 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-primary/10 rounded-full border border-primary/20">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-white">
+                All amenities maintained to highest standards
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
